@@ -1,40 +1,74 @@
 /* eslint-disable */
 
 const gulp = require('gulp');
-const sass = require('gulp-sass');
-const fileinclude = require('gulp-file-include');
-const named = require('vinyl-named');
 const browserSync = require('browser-sync');
-const concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
-const cleanCSS = require('gulp-clean-css');
-const rename = require('gulp-rename');
-const del = require('del');
+const devip = require('dev-ip');
+const fileinclude = require('gulp-file-include');
 const notify = require('gulp-notify');
-const postcss = require('gulp-postcss');
+
+const del = require('del');
+const named = require('vinyl-named');
+const rename = require('gulp-rename');
+
+const sass = require('gulp-sass');
+const concat = require('gulp-concat');
+const cleanCSS = require('gulp-clean-css');
 const autoprefixer = require('autoprefixer');
 const mmq = require('gulp-merge-media-queries');
+const postcss = require('gulp-postcss');
 const plumber = require('gulp-plumber');
+
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
+
+const svgstore = require('gulp-svgstore');
+const svgo = require('gulp-svgo');
+
+const pth = require('path');
 
 const path = {
   js: 'src/js',
   html: 'src/html',
   sass: 'src/sass',
-  css: 'src/css'
+  css: 'src/css',
+  sprite: 'src/sprite'
 };
 
+const jsSubfolders = [
+  'components',
+  'helpers',
+  'init',
+  'observer',
+  'pages',
+  'polyfill'
+];
+
+// Server
 gulp.task('browser-sync', () => {
   browserSync({
     server: {
-      host: '192.168.0.136',
+      host: devip(),
       baseDir: 'src'
     },
     notify: false
   });
 });
 
+// HTML
+gulp.task('html', () =>
+  gulp
+    .src([`${path.html}/pages/*.html`])
+    .pipe(plumber())
+    .pipe(
+      fileinclude({
+        prefix: '@',
+        basepath: '@file'
+      })
+    )
+    .pipe(gulp.dest('./src/'))
+);
+
+// JS
 gulp.task('js', () =>
   gulp
     .src(`./${path.js}/pages/*.js`)
@@ -46,8 +80,7 @@ gulp.task('js', () =>
           rules: [
             {
               loader: 'babel-loader',
-              test: /\.(js)$/,
-              exclude: /(node_modules)/
+              test: /\.(js)$/
             }
           ]
         }
@@ -57,6 +90,7 @@ gulp.task('js', () =>
     .pipe(browserSync.reload({ stream: true }))
 );
 
+// JS Minify
 gulp.task('js-min', () =>
   gulp
     .src(`./${path.js}/pages/*.js`)
@@ -69,8 +103,7 @@ gulp.task('js-min', () =>
             rules: [
               {
                 loader: 'babel-loader',
-                test: /\.(js)$/,
-                exclude: /(node_modules)/
+                test: /\.(js)$/
               }
             ]
           },
@@ -83,6 +116,7 @@ gulp.task('js-min', () =>
     .pipe(browserSync.reload({ stream: true }))
 );
 
+// SASS
 gulp.task('sass', () =>
   gulp
     .src(`${path.sass}/**/*.sass`)
@@ -111,30 +145,45 @@ gulp.task('sass', () =>
     .pipe(browserSync.reload({ stream: true }))
 );
 
-gulp.task('html', () =>
-  gulp
-    .src([`${path.html}/pages/*.html`])
+// SVG Sprite
+gulp.task('sprite', () => {
+  return gulp
+    .src(`${path.sprite}/i-*.svg`)
     .pipe(plumber())
     .pipe(
-      fileinclude({
-        prefix: '@',
-        basepath: '@file'
+      svgo({
+        plugins: [
+          { removeAttrs: { attrs: ['fill', 'fill-rule', 'stroke', 'style'] } }
+        ]
       })
     )
-    .pipe(gulp.dest('./src/'))
-);
+    .pipe(svgstore({ inlineSvg: true }))
+    .pipe(rename('sprite.svg'))
+    .pipe(gulp.dest(`${path.sprite}/`));
+});
 
 gulp.task('removedist', () => del.sync('dist'));
 
-gulp.task('watch', ['html', 'sass', 'js', 'browser-sync'], () => {
+// Watcher
+gulp.task('watch', ['html', 'js', 'sass', 'sprite', 'browser-sync'], () => {
+  // Styles
   gulp.watch(`${path.sass}/**/*.sass`, ['sass']);
-  gulp.watch([`${path.js}/blocks/*.js`], ['js']);
-  gulp.watch([`${path.js}/pages/*.js`], ['js']);
-  gulp.watch([`${path.html}/**/*.html`, `${path.html}/svg/*.svg`], ['html']);
+
+  // SVG
+  gulp.watch(`${path.sprite}/i-*.svg`, ['sprite']);
+
+  // JS
+  jsSubfolders.forEach(subfolder => {
+    gulp.watch([`${path.js}/${subfolder}/**/*.js`], ['js']);
+  });
+
+  // HTML
+  gulp.watch(`${path.html}/**/*.html`, ['html']);
   gulp.watch('src/*.html', browserSync.reload);
 });
 
-gulp.task('build', ['removedist', 'html', 'sass', 'js-min'], () => {
+// Build
+gulp.task('build', ['removedist', 'html', 'sass', 'sprite', 'js-min'], () => {
   const buildFiles = gulp.src(['src/*.html']).pipe(gulp.dest('dist'));
 
   const buildFonts = gulp.src(['src/fonts/**/*']).pipe(gulp.dest('dist/fonts'));
