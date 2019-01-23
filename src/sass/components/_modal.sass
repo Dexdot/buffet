@@ -1,3 +1,4 @@
+// Modal
 .modal
   position: relative
   opacity: 0
@@ -6,6 +7,8 @@
     opacity: 1
     pointer-events: auto
 
+
+// Overlay
 .modal__overlay
   z-index: 4
   position: fixed
@@ -20,6 +23,8 @@
   align-items: center
   justify-content: center
 
+
+// Container
 .modal__container
   background: #fff
   overflow-y: auto
@@ -29,15 +34,26 @@
   max-width: 510px
   max-height: 100vh
 
+.modal__container
+  width: 386px
+  @media (max-width: 500px)
+    width: 100%
+
+
+// Content
 .modal__content
   display: flex
   flex-direction: column
   padding: 56px 0
 
+
+// Footer
 .modal__footer
   display: flex
   align-items: stretch
 
+
+// Button
 .modal__btn
   flex: 1
   height: 56px
@@ -47,6 +63,8 @@
   font-size: 16px
   letter-spacing: 0.01em
 
+
+// Animations
 @keyframes mmfadeIn
   from
     opacity: 0
@@ -87,8 +105,3 @@
 .modal .modal__container,
 .modal .modal__overlay
   will-change: transform
-
-.modal__container
-  width: 386px
-  @media (max-width: 500px)
-    width: 100%

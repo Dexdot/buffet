@@ -43,6 +43,7 @@ const jsSubfolders = [
   'polyfill'
 ];
 
+
 // Server
 gulp.task('browser-sync', () => {
   browserSync({
@@ -53,6 +54,7 @@ gulp.task('browser-sync', () => {
     notify: false
   });
 });
+
 
 // HTML
 gulp.task('html', () =>
@@ -67,6 +69,7 @@ gulp.task('html', () =>
     )
     .pipe(gulp.dest('./src/'))
 );
+
 
 // JS
 gulp.task('js', () =>
@@ -89,6 +92,7 @@ gulp.task('js', () =>
     .pipe(gulp.dest(`./${path.js}`))
     .pipe(browserSync.reload({ stream: true }))
 );
+
 
 // JS Minify
 gulp.task('js-min', () =>
@@ -115,6 +119,7 @@ gulp.task('js-min', () =>
     .pipe(gulp.dest(`./${path.js}`))
     .pipe(browserSync.reload({ stream: true }))
 );
+
 
 // SASS
 gulp.task('sass', () =>
@@ -145,6 +150,7 @@ gulp.task('sass', () =>
     .pipe(browserSync.reload({ stream: true }))
 );
 
+
 // SVG Sprite
 gulp.task('sprite', () => {
   return gulp
@@ -162,7 +168,9 @@ gulp.task('sprite', () => {
     .pipe(gulp.dest(`${path.sprite}/`));
 });
 
+
 gulp.task('removedist', () => del.sync('dist'));
+
 
 // Watcher
 gulp.task('watch', ['html', 'js', 'sass', 'sprite', 'browser-sync'], () => {
@@ -182,6 +190,7 @@ gulp.task('watch', ['html', 'js', 'sass', 'sprite', 'browser-sync'], () => {
   gulp.watch('src/*.html', browserSync.reload);
 });
 
+
 // Build
 gulp.task('build', ['removedist', 'html', 'sass', 'sprite', 'js-min'], () => {
   const buildFiles = gulp.src(['src/*.html']).pipe(gulp.dest('dist'));
@@ -197,4 +206,6 @@ gulp.task('build', ['removedist', 'html', 'sass', 'sprite', 'js-min'], () => {
   const buildImg = gulp.src(['src/img/**/*']).pipe(gulp.dest('dist/img'));
 });
 
+
+// Default task
 gulp.task('default', ['watch']);

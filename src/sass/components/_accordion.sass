@@ -7,6 +7,8 @@
 //   </li>
 // </ul>
   
+
+// Accordion
 .accordion
   position: relative
   display: flex
@@ -14,23 +16,30 @@
   align-items: stretch
   justify-content: flex-start
 
-  &__num
-    font-size: 16px
-    color: rgba(#444, 0.4)
+  
+// Num
+.accordion__num
+  font-size: 16px
+  color: rgba(#444, 0.4)
 
-    position: absolute
-    top: 40px
-    left: 0
+  position: absolute
+  top: 40px
+  left: 0
 
-  &__btn
-    padding-right: 16px
-    width: 100%
 
-    position: relative
-    
-    text-align: left
-    font-size: 16px
+// Button
+.accordion__btn
+  padding-right: 16px
+  width: 100%
 
+  position: relative
+  
+  text-align: left
+  font-size: 16px
+
+
+// Icons
+.accordion__btn
   .i-arrow
     position: absolute
     top: 46%
@@ -53,8 +62,10 @@
     top: 50%
     right: 0
 
-  &.is-open
-    .i-close
-      transform: rotate(0) translateY(-50%)
-    .i-arrow
-      transform: rotate(90deg) translateX(-50%)
+
+// Opened
+.accordion__btn.is-open
+  .i-close
+    transform: rotate(0) translateY(-50%)
+  .i-arrow
+    transform: rotate(90deg) translateX(-50%)
