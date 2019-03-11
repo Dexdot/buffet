@@ -79,6 +79,8 @@ module.exports = __webpack_require__(1);
 
 __webpack_require__(2);
 
+__webpack_require__(3);
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -96,6 +98,22 @@ exports.default = isIE11;
 if (isIE11) {
   document.querySelector('html').classList.add('ie11');
 }
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var set = function set() {
+  var vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', vh + 'px');
+};
+
+set();
+
+$(window).on('resize', set);
 
 /***/ })
 /******/ ]);
