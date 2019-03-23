@@ -36,5 +36,5 @@
 @function gutter-spans($i)
   @return calc(#{$i} * var(--column-and-gutter-unit) - var(--column-unit))
 
-@function mix-units($columns, $gutters: $columns)
+@function mix($columns, $gutters: $columns)
   @return calc((#{$columns} * var(--column-unit)) + (#{$gutters} * var(--gutter-unit)))

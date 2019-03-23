@@ -62,10 +62,8 @@ gulp.task('html', () =>
     .pipe(
       fileinclude({
         prefix: '@',
-        basepath: '@file'
-        // context: {
-        //   webRoot: 'http://che.devproject.ru'
-        // }
+        basepath: '@file',
+        context: require('./context')
       })
     )
     .pipe(gulp.dest('./src/'))
