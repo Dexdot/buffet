@@ -1,4 +1,5 @@
-import isIOS from '../detect/ios';
+import { lockyOn } from 'dom-locky';
+import { isMobileSafari } from '@/helpers/detect';
 
 const html = document.querySelector('html');
 
@@ -8,8 +9,8 @@ const freezeVp = e => {
 let unlock = null;
 
 const disable = el => {
-  if (isIOS) {
-    unlock = window.locky.lockyOn(el);
+  if (isMobileSafari()) {
+    unlock = lockyOn(el);
   } else {
     html.classList.add('no-scroll');
     document.body.addEventListener('touchmove', freezeVp, false);
@@ -17,7 +18,7 @@ const disable = el => {
 };
 
 const enable = () => {
-  if (isIOS) {
+  if (isMobileSafari()) {
     if (unlock) unlock();
   } else {
     html.classList.remove('no-scroll');

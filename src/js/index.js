@@ -44,6 +44,11 @@
 /******/ 		}
 /******/ 	};
 /******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -59,61 +64,46 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/******/ ({
 
-module.exports = __webpack_require__(1);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(2);
-
-__webpack_require__(3);
-
-/***/ }),
-/* 2 */
+/***/ "./src/js/init/css-props.js":
+/*!**********************************!*\
+  !*** ./src/js/init/css-props.js ***!
+  \**********************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
-exports.default = isIE11;
-
-
-if (isIE11) {
-  document.querySelector('html').classList.add('ie11');
-}
+eval("\n\nvar set = function set() {\n  // Viewport height\n  var vh = window.innerHeight * 0.01;\n  document.documentElement.style.setProperty('--vh', vh + 'px');\n};\n\nwindow.addEventListener('DOMContentLoaded', set);\nwindow.addEventListener('resize', set);\n\n//# sourceURL=webpack:///./src/js/init/css-props.js?");
 
 /***/ }),
-/* 3 */
+
+/***/ "./src/js/pages/index.js":
+/*!*******************************!*\
+  !*** ./src/js/pages/index.js ***!
+  \*******************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+eval("\n\n__webpack_require__(/*! @/init/css-props */ \"./src/js/init/css-props.js\");\n\n/* eslint-disable */\n\nvar msgStyles = ['\\n %c Made with ♥️ by its.agency %c %c %c https://its.agency/ %c %c \\n', 'color: #fff; background: #333333; padding:5px 0;', 'background: #333333; padding:5px 0;', 'background: #333333; padding:5px 0;', 'color: #fff; background: #333333; padding:5px 0;', 'background: #fff; padding:5px 0;', 'color: #333333; background: #fff; padding:5px 0;'];\nwindow.console.log.apply(console, msgStyles);\n\n//# sourceURL=webpack:///./src/js/pages/index.js?");
 
+/***/ }),
 
-var set = function set() {
-  var vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', vh + 'px');
-};
+/***/ 0:
+/*!*************************************!*\
+  !*** multi ./src/js/pages/index.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
-set();
-
-$(window).on('resize', set);
+eval("module.exports = __webpack_require__(/*! C:\\Users\\Dexdot\\Desktop\\Dev\\_buffet\\src\\js\\pages\\index.js */\"./src/js/pages/index.js\");\n\n\n//# sourceURL=webpack:///multi_./src/js/pages/index.js?");
 
 /***/ })
-/******/ ]);
+
+/******/ });

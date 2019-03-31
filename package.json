@@ -25,6 +25,7 @@
     "eslint": "^5.0.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-config-prettier": "^2.9.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-prettier": "^2.6.1",
     "gulp": "^3.9.1",
@@ -44,28 +45,6 @@
     "vinyl-named": "^1.1.0",
     "webpack": "4.6.0",
     "webpack-stream": "4.0.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "browser": true,
-      "jquery": true
-    },
-    "extends": [
-      "airbnb-base",
-      "prettier"
-    ],
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "allowImportExportEverywhere": true
-    },
-    "rules": {
-      "linebreak-style": [
-        "error",
-        "windows"
-      ],
-      "import/no-cycle": false
-    }
   },
   "dependencies": {}
 }
